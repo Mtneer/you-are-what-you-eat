@@ -7,12 +7,13 @@ export const RecipeContext = createContext()
 export const RecipeProvider = (props) => {
     const [recipes, setRecipes] = useState([])
     // const [searchTerms, setSearchTerms ] = useState("")
+    const currentUser = localStorage.getItem("YouAreWhatYouEat_user")
 
     const getRecipes = () => {
         return fetch("http://localhost:8088/recipes")
         .then(res => res.json())
         .then(setRecipes)
-        .then(console.log(recipes))
+        // .then(console.log(recipes))
     }
 
     // const getRecipeById = (id) => {
