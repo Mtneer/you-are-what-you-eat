@@ -5,13 +5,14 @@ import "./Login.css"
 export const Register = (props) => {
     const firstName = useRef()
     const lastName = useRef()
+    const userName = useRef()
     const email = useRef()
     const verifyPassword = useRef()
     const conflictDialog = useRef()
     const history = useHistory()
 
     const existingUserCheck = () => {
-        return fetch(`http://localhost:8088/customers?email=${email.current.value}`)
+        return fetch(`http://localhost:8088/users?email=${email.current.value}`)
             .then(res => res.json())
             .then(user => !!user.length)
     }
@@ -23,21 +24,23 @@ export const Register = (props) => {
         existingUserCheck()
             .then((userExists) => {
                 if (!userExists) {
-                    fetch("http://localhost:8088/customers", {
+                    fetch("http://localhost:8088/users", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
                             email: email.current.value,
-                            name: `${firstName.current.value} ${lastName.current.value}`
+                            userName: userName.current.value,
+                            firstName: firstName.current.value,
+                            lastName: lastName.current.value
                         })
                     })
                         .then(res => res.json())
                         .then(createdUser => {
                             if (createdUser.hasOwnProperty("id")) {
-                                localStorage.setItem("kennel_customer", createdUser.id)
-                                history.push("/")
+                                localStorage.setItem("YouAreWhatYouEat_user", createdUser.id)
+                                history.push("/recipes")
                             }
                         })
                 }
@@ -57,7 +60,7 @@ export const Register = (props) => {
             </dialog>
 
             <form className="form--login" onSubmit={handleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Please Register for NSS Kennels</h1>
+                <h1 className="h3 mb-3 font-weight-normal">Please Register for You Are What You Eat</h1>
                 <fieldset>
                     <label htmlFor="firstName"> First Name </label>
                     <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
@@ -65,6 +68,10 @@ export const Register = (props) => {
                 <fieldset>
                     <label htmlFor="lastName"> Last Name </label>
                     <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="userName"> User Name </label>
+                    <input ref={userName} type="text" name="userName" className="form-control" placeholder="User name" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputEmail"> Email address </label>

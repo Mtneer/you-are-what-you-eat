@@ -1,29 +1,49 @@
-import React from "react"
-import { Route } from "react-router-dom"
-import "./Kennel.css"
-import { Home } from "./Home"
+import React, { useState, useContext, useEffect } from "react"
+import { useHistory } from 'react-router-dom';
+import { RecipeContext } from "./RecipeProvider"
+import { RecipeCard } from "./Recipe"
+import "./Recipe.css"
 
-// import { RecipeSearch } from "./Recipe/RecipeSearch"
-// import { RecipeForm } from "./Recipe/RecipeForm"
-import { RecipeList } from "./Recipe/RecipeList"
-import { RecipeProvider } from "./Recipe/RecipeProvider"
+export const RecipeList = () => {
+    const { getRecipes, recipes } = useContext(RecipeContext)
+    
+    // Since you are no longer ALWAYS displaying all of the Recipes
+    // const [ filteredRecipes, setFiltered ] = useState([])
+    const history = useHistory()
 
-export const ApplicationViews = () => {
+    // Initialization effect hook -> Go get Recipe data
+    useEffect(()=>{
+        getRecipes()
+    }, [])
+
+    // useEffect dependency array with dependencies - will run if dependency changes (state)
+    // searchTerms will cause a change
+    // useEffect(() => {
+    //     if (searchTerms !== "") {
+    //         // If the search field is not blank, display matching Recipes
+    //         const subset = recipes.filter(Recipe => Recipe.name.toLowerCase().includes(searchTerms))
+    //         setFiltered(subset)
+    //     } else {
+    //         // If the search field is blank, display all Recipes
+    //         setFiltered(recipes)
+    //     }
+    // }, [searchTerms, Recipes])
+
     return (
         <>
-            {/* Render the location list when http://localhost:3000/ */}
-            
-            {/* <Route exact path="/">
-                <Home />
-            </Route> */}
+            <h1>Recipes</h1>
 
-            {/* Render the Recipe list when http://localhost:3000/recipes */}
-            <RecipeProvider>
-                <Route exact path="/recipes">
-                    <RecipeSearch />
-                    <RecipeList />
-                </Route>
-            </RecipeProvider>
+            {/* <button onClick={() => history.push("/recipes/create")}>
+                Make Reservation
+            </button> */}
+
+            <div className="recipes">
+                {
+                    recipes.map(recipe => {
+                        return <RecipeCard key={recipe.id} recipe={recipe} />
+                    })
+                }
+            </div>
         </>
     )
 }
