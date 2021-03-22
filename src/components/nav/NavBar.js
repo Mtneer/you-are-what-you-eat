@@ -8,7 +8,8 @@ export const NavBar = (props) => {
 
     return (
         <>
-        <ul className="navbar">
+        <header className="navbar">
+        <ul className="navbar__list">
             <li className="navbar__item">
                 <Link className="navbar__link" to="/recipes">Recipes</Link>
             </li>
@@ -22,9 +23,12 @@ export const NavBar = (props) => {
                 <Link className="navbar__link" to="/nutrition ">Nutrition</Link>
             </li>
         </ul>
-        <Button className="logout" onClick={() => {localStorage.removeItem("YouAreWhatYouEat_user"); history.push("/login")}}>
-            Logout
-        </Button>
+        <div>
+            <Button className="logout" onClick={() => {localStorage.removeItem("YouAreWhatYouEat_user"); history.push("/login")}}>
+                Logout
+            </Button>
+        </div>
+        </header>
         </>
     )
 }

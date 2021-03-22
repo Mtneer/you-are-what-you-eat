@@ -1,10 +1,19 @@
 .navbar {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: left;
+    justify-content: space-between;
+    background-color: lightgrey;
+    align-items: center;
+}
+
+.navbar__list {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .navbar__item {
-    flex-basis: 20%;
+    margin-left: 4vw;
+    margin-right: 4vw;
     list-style-type: none;
+    padding-bottom: 0;
 }

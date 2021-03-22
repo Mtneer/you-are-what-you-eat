@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react"
 import { useHistory } from 'react-router-dom';
 import { RecipeContext } from "./RecipeProvider"
 import { RecipeCard } from "./Recipe"
+import Button from "react-bootstrap/Button"
 import "./Recipe.css"
 
 export const RecipeList = () => {
@@ -33,9 +34,9 @@ export const RecipeList = () => {
         <>
             <h1>Recipes</h1>
 
-            {/* <button onClick={() => history.push("/recipes/create")}>
-                Make Reservation
-            </button> */}
+            <Button onClick={() => history.push("/recipes/create")}>
+                Create New Recipe
+            </Button>
 
             <div className="recipes">
                 {
