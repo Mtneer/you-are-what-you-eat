@@ -88,7 +88,9 @@ export const RecipeForm = () => {
         userId: +localStorage.getItem("YouAreWhatYouEat_user"),
         instructions: recipe.instructions
       })
-      .then()
+      .then(parsedRes => {
+        //Promise.all using RecipeId
+      }) 
       .then(() => history.push("/recipes"))
     }
 
