@@ -24,7 +24,7 @@ export const NavBar = (props) => {
             </li>
         </ul>
         <div>
-            <Button className="logout" onClick={() => {localStorage.removeItem("YouAreWhatYouEat_user"); history.push("/login")}}>
+            <Button className="logout btn-sm" onClick={() => {localStorage.removeItem("YouAreWhatYouEat_user"); history.push("/login")}}>
                 Logout
             </Button>
         </div>
