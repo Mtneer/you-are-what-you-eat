@@ -13,23 +13,14 @@ export const RecipeForm = () => {
     With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
     Define the intial state of the form inputs with useState()
     */
-
     const [recipe, setRecipe] = useState({})
     const [ingredients, setIngredients] = useState([])
+    let [numIngredients, setNumIngredients] = useState(1)
     
     const history = useHistory()
 
-    let [numIngredients, setNumIngredients] = useState(1)
-    
     // when the "+ Row" button is clicked, this function will copy state, add 1 to state, and pass the new number of rows into the IngredientTable component, which will re-render
     const handleAddRow = () => {
-
-      /* When changing a state object or array,
-      always create a copy, make changes, and then set state.*/
-      // const ingredientList = [ ...ingredients ]
-      // console.log(ingredientList)
-      // console.log(ingredientList.length)
-
         // Add 1 to the number of ingredients
         let newNumIngredients = ++numIngredients
         setNumIngredients(newNumIngredients)
@@ -49,38 +40,6 @@ export const RecipeForm = () => {
       setRecipe(newRecipe)
     }
 
-    // const handleIngredientInputChange = (event) => {
-    //   // determine the row of the ingredient changed and the ingredient element being changed
-    //   let [_ , row, elem] = event.target.id.split("-")
-    //   row = +row -1
-      
-    //   /* When changing a state object or array,
-    //   always create a copy, make changes, and then set state.*/
-    //   let ingredientList = [ ...ingredients ]
-
-    //   if (ingredientList.length < row + 1) {
-    //     let newIngredient = {
-    //       name: "", 
-    //       amount: "", 
-    //       unit: "", 
-    //       preparation: "", 
-    //       foodType: ""
-    //     }
-    //     newIngredient[elem] = event.target.value
-    //     ingredientList = ingredientList.push(newIngredient)
-    //   } else {
-    //     if (elem === "foodType") {
-    //       ingredientList[row][elem]=event.target.value
-    //     } else {
-    //       ingredientList[row][elem]=event.target.innerText
-    //     }
-    //   }
-      
-    //   console.log(ingredientList)
-      
-    //   setIngredients(ingredientList)
-    // }
-
     const handleClickSaveRecipe = () => {
       // Save the recipe details
       addRecipe({
@@ -88,9 +47,13 @@ export const RecipeForm = () => {
         userId: +localStorage.getItem("YouAreWhatYouEat_user"),
         instructions: recipe.instructions
       })
+      .then(response => response.json())
       .then(parsedRes => {
-        //Promise.all using RecipeId
-      }) 
+        // pull out RecipeId
+        const recipeId = parsedRes.id
+        // pass in array of ingredients and recipeId to addIngredientFunction
+        addIngredient(ingredients, recipeId)
+      })
       .then(() => history.push("/recipes"))
     }
 

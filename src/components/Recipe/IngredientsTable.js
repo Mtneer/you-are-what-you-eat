@@ -12,15 +12,11 @@ export const IngredientTable = ({numberIngredients, setIngredients, ingredients}
         // determine the row of the ingredient changed and the ingredient element being changed
         const [_ , row, elem] = event.target.id.split("-")
         const rowIndex = +row -1
-        console.log(rowIndex)
-        console.log(elem)
         
         /* When changing a state object or array,
         always create a copy, make changes, and then set state.*/
         const ingredientList = [ ...ingredients ]
-        console.log(ingredientList)
-        console.log(ingredientList.length)
-        console.log(ingredientList.length < rowIndex + 1)
+
         if (ingredientList.length < +row) {
           let newIngredient = {
             name: "", 
@@ -35,8 +31,8 @@ export const IngredientTable = ({numberIngredients, setIngredients, ingredients}
             newIngredient[elem]=event.target.innerText
           }
           
-          const newIngredientList = ingredientList.push(newIngredient)
-          setIngredients(newIngredientList)
+          ingredientList.push(newIngredient)
+          setIngredients(ingredientList)
         } else {
           if (elem === "foodType") {
             ingredientList[rowIndex][elem]=event.target.value

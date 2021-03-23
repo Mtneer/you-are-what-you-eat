@@ -29,7 +29,7 @@ export const RecipeProvider = (props) => {
             },
             body: JSON.stringify(RecipeObj)
         })
-        .then(response => response.json())
+        // .then(response => response.json())
     }
     
     // const releaseRecipe = RecipeId => {
@@ -50,15 +50,20 @@ export const RecipeProvider = (props) => {
     //       .then(getRecipes)
     //   }
 
-    const addIngredient = IngObj => {
-        return fetch("http://localhost:8088/recipes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(IngObj)
+    const addIngredient = (IngArr, recipeId) => {
+        const promiseArray = IngArr.map(IngObj => {
+            IngObj.recipeId = recipeId
+            fetch("http://localhost:8088/ingredients", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(IngObj)
+            })
         })
-        .then(response => response.json())
+        // return Promise.all()
+        return Promise.all(promiseArray)
+        // .then(response => response.json())
     }
 
     /*
