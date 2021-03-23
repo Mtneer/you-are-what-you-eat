@@ -10,10 +10,10 @@ export const RecipeProvider = (props) => {
     const currentUser = localStorage.getItem("YouAreWhatYouEat_user")
 
     const getRecipes = () => {
-        return fetch("http://localhost:8088/recipes")
+        return fetch("http://localhost:8088/recipes?_embed=ingredients")
         .then(res => res.json())
         .then(setRecipes)
-        // .then(console.log(recipes))
+        .then(console.log(recipes))
     }
 
     // const getRecipeById = (id) => {
@@ -21,16 +21,16 @@ export const RecipeProvider = (props) => {
     //         .then(res => res.json())
     // }
 
-    // const addRecipe = RecipeObj => {
-    //     return fetch("http://localhost:8088/recipes", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(RecipeObj)
-    //     })
-    //     .then(response => response.json())
-    // }
+    const addRecipe = RecipeObj => {
+        return fetch("http://localhost:8088/recipes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(RecipeObj)
+        })
+        // .then(response => response.json())
+    }
     
     // const releaseRecipe = RecipeId => {
     //     return fetch(`http://localhost:8088/Recipes/${RecipeId}`, {
@@ -50,6 +50,22 @@ export const RecipeProvider = (props) => {
     //       .then(getRecipes)
     //   }
 
+    const addIngredient = (IngArr, recipeId) => {
+        const promiseArray = IngArr.map(IngObj => {
+            IngObj.recipeId = recipeId
+            fetch("http://localhost:8088/ingredients", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(IngObj)
+            })
+        })
+        // return Promise.all()
+        return Promise.all(promiseArray)
+        // .then(response => response.json())
+    }
+
     /*
         You return a context provider which has the
         `Recipes` state, `getRecipes` function,
@@ -58,7 +74,7 @@ export const RecipeProvider = (props) => {
     */
     return (
         <RecipeContext.Provider value={{
-            recipes, getRecipes
+            recipes, getRecipes, addRecipe, addIngredient
         }}>
             {props.children}
         </RecipeContext.Provider>

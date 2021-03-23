@@ -4,7 +4,7 @@ import "./YouAreWhatYouEat.css"
 // import { Home } from "./Home"
 
 // import { RecipeSearch } from "./Recipe/RecipeSearch"
-// import { RecipeForm } from "./Recipe/RecipeForm"
+import { RecipeForm } from "./Recipe/RecipeForm"
 import { RecipeList } from "./Recipe/RecipeList"
 import { RecipeProvider } from "./Recipe/RecipeProvider"
 
@@ -21,6 +21,9 @@ export const ApplicationViews = () => {
             <RecipeProvider>
                 <Route exact path="/recipes">
                     <RecipeList />
+                </Route>
+                <Route exact path="/recipes/create">
+                    <RecipeForm />
                 </Route>
             </RecipeProvider>
         </>
