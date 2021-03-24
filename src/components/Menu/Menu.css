@@ -1,0 +1,15 @@
+.menuForm__header {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.flex-container {
+    display: flex;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
