@@ -6,6 +6,7 @@ export const MenuContext = createContext()
 // This component establishes what data can be used.
 export const MenuProvider = (props) => {
     const [menus, setMenus] = useState([])
+    const [menuRecipes, setMenuRecipes] = useState([])
     // const [searchTerms, setSearchTerms ] = useState("")
     const currentUser = localStorage.getItem("YouAreWhatYouEat_user")
 
@@ -51,7 +52,7 @@ export const MenuProvider = (props) => {
     const getMenuRecipes = (menuId) => {
         return fetch(`http://localhost:8088/menurecipes?_menuId=${menuId}`)
         .then(res => res.json())
-        .then(setMenus)
+        .then(setMenuRecipes)
     }
     
     // const releaseMenu = MenuId => {
@@ -80,7 +81,7 @@ export const MenuProvider = (props) => {
     */
     return (
         <MenuContext.Provider value={{
-            menus, getMenus, addMenu, addMenuRecipes
+            menus, getMenus, menuRecipes, getMenuRecipes, setMenuRecipes, addMenu, addMenuRecipes
         }}>
             {props.children}
         </MenuContext.Provider>

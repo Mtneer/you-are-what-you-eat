@@ -13,7 +13,7 @@ import { MenuFormProvider } from "./Menu/DragDropProvider"
 import { MenuForm } from "./Menu/MenuForm"
 
 export const ApplicationViews = () => {
-    console.log(React.version)
+
     return (
         <>
             {/* Render the location list when http://localhost:3000/ */}

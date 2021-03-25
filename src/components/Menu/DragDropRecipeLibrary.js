@@ -13,7 +13,7 @@ export const DragDropRecipeLibrary = ({recipes}) => {
                     <div className="recipeList" ref={provided.innerRef} {...provided.droppableProps}>
                         {
                             recipes.map((recipe,index) => (
-                                <DraggableRecipeItem key={recipe.id} recipe={recipe.recipe} index={index} />
+                                <DraggableRecipeItem key={recipe.id} specifier={"R"} recipe={recipe.recipe} index={index} />
                             ))
                         }
                     {provided.placeholder}

@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, createContext } from "react"
 import { RecipeContext } from "../Recipe/RecipeProvider"
+import { MenuContext } from "./MenuProvider"
 
 // The context is imported and used by individual components that need data
 export const MenuFormContext = createContext()
@@ -7,6 +8,8 @@ export const MenuFormContext = createContext()
 // This component establishes what data can be used.
 export const MenuFormProvider = (props) => {
     const {userRecipes, getUserRecipes} = useContext(RecipeContext)
+    const { menuRecipes, setMenuRecipes } = useContext(MenuContext)
+
 
     // Initialization effect hook -> Go get Recipe data
     useEffect(()=>{

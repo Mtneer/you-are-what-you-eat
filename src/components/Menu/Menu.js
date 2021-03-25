@@ -1,17 +1,50 @@
 import React from "react"
 import Card from 'react-bootstrap/Card'
+import { Droppable } from "react-beautiful-dnd"
 import { Meal } from "./Meal"
 
-export const Menu = ({ menuDay, dayRecipes}) => {
+export const Menu = ({ numDay, dayRecipes}) => {
+    console.log(Array.from({length: 4}, (_, index) => index + 1))
+    const labels = ["Breakfast", "Lunch", "Dinner", "Snack"]
+
     
     return (
         <Card className="menu-card">
             <Card.Body>
-                <Card.Title>{menuDay.title}</Card.Title>
+                <Card.Title>{`Day-${numDay}`}</Card.Title>
                 <div className="dayForm-container">
-                    {dayRecipes.map((recipeId,index) => {
-                        <Meal key={recipeId} day={menuDay.title} recipeId={recipeId} index={index} />        
-                    })}
+                    {Array.from({length: 4}, (_, index) => index + 1).map((positionNum) => {
+                        
+                        const recipe = dayRecipes.filter(dayRecipe => {
+                            if (dayRecipe.position === positionNum) {
+                                console.log(dayRecipe)
+                                return dayRecipe
+                            }
+                        })
+
+                        if (recipe.length > 0) {
+                            return (
+                                <>
+                                    <h5 className="meal">{labels[positionNum-1]}</h5>
+                                    <Meal key={`R-${positionNum}`} numDay={numDay} recipe={recipe} positionNum={positionNum} />   
+                                </>     
+                            )
+                        } else {
+                            return (
+                                <>
+                                <h5 className="meal">{labels[positionNum-1]}</h5>
+                                <Droppable droppableId={`Day-${numDay}-P-${positionNum}`}>
+                                    {(provided) => (
+                                        <div className="mealDayForm-container" ref={provided.innerRef} {...provided.droppableProps}>
+                                            
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>   
+                                </> 
+                            )
+                        }
+                        })}
                 </div>
             </Card.Body>
         </Card>

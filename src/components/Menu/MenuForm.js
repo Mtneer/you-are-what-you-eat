@@ -10,8 +10,11 @@ import "./Menu.css"
 
 export const MenuForm = () => {
     // pull functions and define State to save new menu
-    const { addMenu, addMenuRecipes } = useContext(MenuContext)
+    const { addMenu, addMenuRecipes, getMenuRecipes } = useContext(MenuContext)
     const [menu, setMenu] = useState({})
+
+    const menuID = 1
+    const { menuRecipes, setMenuRecipes } = useContext(MenuContext)
 
     // Define State to manage number of days in the menu
     let [numDays, setNumDays] = useState(1)
@@ -20,7 +23,7 @@ export const MenuForm = () => {
     const { menuFormData, setMenuFormData } = useContext(MenuFormContext)
     console.log(menuFormData)
     
-    const [menuRecipes, setMenuRecipes] = useState([])
+    // const [menuRecipes, setMenuRecipes] = useState([])
 
     // Set state to keep track of which recipes are in each MenuDay for the drag and drop feature. This will be an array of recipeIds
     // const [menuDay, setMenuDay] = useState([])
@@ -35,6 +38,7 @@ export const MenuForm = () => {
     // Initialization effect hook -> Go get Recipe data
     useEffect(()=>{
         getUserRecipes()
+        .then(getMenuRecipes(menuID))
         .then(console.log(userRecipes))
     }, [])
 
@@ -44,7 +48,7 @@ export const MenuForm = () => {
         let newNumDays = ++numDays
         setNumDays(newNumDays)
 
-        let formData = {...menuFormData}
+        // let formData = {...menuFormData}
 
     }
 
@@ -79,6 +83,7 @@ export const MenuForm = () => {
     }
 
     const handleDragChange = (result) => {
+        console.log(result)
         const { destination, source, draggableId } = result;
 
         // If the destination is empty, no change needs to be processed
@@ -90,7 +95,56 @@ export const MenuForm = () => {
             return;
         }
 
-        // const start = 
+        const start = []
+        const finish = []
+
+        if (start === finish) {
+            const newTaskIds = Array.from(start.taskIds);
+            newTaskIds.splice(source.index, 1);
+            newTaskIds.splice(destination.index, 0, draggableId);
+      
+            const newColumn = {
+              ...start,
+              taskIds: newTaskIds,
+            };
+      
+            const newState = {
+              ...this.state,
+              columns: {
+                ...this.state.columns,
+                [newColumn.id]: newColumn,
+              },
+            };
+      
+            this.setState(newState);
+            return;
+        }
+
+        // Moving from one list to another
+        const startTaskIds = Array.from(start.taskIds);
+        startTaskIds.splice(source.index, 1);
+        const newStart = {
+        ...start,
+        taskIds: startTaskIds,
+        };
+
+        const finishTaskIds = Array.from(finish.taskIds);
+        finishTaskIds.splice(destination.index, 0, draggableId);
+        const newFinish = {
+        ...finish,
+        taskIds: finishTaskIds,
+        };
+
+        const newState = {
+        ...this.state,
+        columns: {
+            ...this.state.columns,
+            [newStart.id]: newStart,
+            [newFinish.id]: newFinish,
+        },
+        };
+        this.setState(newState);
+
     }
 
     return (
@@ -102,15 +156,24 @@ export const MenuForm = () => {
                         <h2 className="menuForm__title">New Menu</h2>
                         <fieldset className="flex-container">
                             <label htmlFor="name">Menu name:</label>
-                            <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Menu name" />
+                            <input type="text" id="name" required autoFocus className="form-control" placeholder="Menu name" />
                         </fieldset>
                         <div>
                             <button className="btn btn-secondary btn-sm" onClick={handleAddDay}>+ Day</button>
                         </div>
                     </div>
                     <div className="menuDay__container">
-                        {menuFormData.menuDays.map(menuDay => {
-                            <Menu key={menuDay.id} menuDay={menuDay} dayRecipes={menuDay.recipes}></Menu>
+                        {Array.from({length: numDays}, (_, index) => index + 1).map(numDay => {
+                            console.log(numDay)
+                            // if the position number of the menuRecipe is between (numDays-1)*4 and numDays*4, then pass it into dayRecipes
+                            const dayRecipes = menuRecipes.filter(menuRecipe => {
+                                if (menuRecipe.position > (numDay-1)*4 && menuRecipe.position <= numDay*4) {
+                                    return menuRecipe
+                                }
+                            })
+                            return (
+                                <Menu key={`Day-${numDay}`} numDay={numDay} dayRecipes={dayRecipes}></Menu>
+                            )
                         })}
                     </div>
                     <button className="btn btn-primary"
