@@ -10,10 +10,10 @@ export const DragDropRecipeLibrary = ({recipes}) => {
             <h3>Recipes</h3>
             <Droppable droppableId="recipeLibrary">
                 {(provided) => (
-                    <div className="recipeList" innerRef={provided.innerRef} {...provided.droppableProps}>
+                    <div className="recipeList" ref={provided.innerRef} {...provided.droppableProps}>
                         {
                             recipes.map((recipe,index) => (
-                                <DraggableRecipeItem key={recipe.id} recipe={recipe} index={index} />
+                                <DraggableRecipeItem key={recipe.id} recipe={recipe.recipe} index={index} />
                             ))
                         }
                     {provided.placeholder}

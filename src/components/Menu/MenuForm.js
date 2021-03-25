@@ -18,6 +18,7 @@ export const MenuForm = () => {
 
     // pull functions and data to manage the drag and drop feature
     const { menuFormData, setMenuFormData } = useContext(MenuFormContext)
+    console.log(menuFormData)
     
     const [menuRecipes, setMenuRecipes] = useState([])
 
@@ -29,11 +30,12 @@ export const MenuForm = () => {
     
     const history = useHistory()
 
-    const { recipes, getRecipes } = useContext(RecipeContext)
+    const { userRecipes, getUserRecipes  } = useContext(RecipeContext)
 
     // Initialization effect hook -> Go get Recipe data
     useEffect(()=>{
-        getRecipes()
+        getUserRecipes()
+        .then(console.log(userRecipes))
     }, [])
 
     // when the "+ Row" button is clicked, this function will copy state, add 1 to state, and pass the new number of rows into the IngredientTable component, which will re-render
@@ -43,12 +45,12 @@ export const MenuForm = () => {
         setNumDays(newNumDays)
 
         let formData = {...menuFormData}
-        
+
     }
 
     //when a field changes, update state. The return will re-render and display based on the values in state
     //Controlled component
-    // const handleControlledInputChange = (event) => {
+    const handleControlledInputChange = (event) => {
     //   /* When changing a state object or array,
     //   always create a copy, make changes, and then set state.*/
     //   const newMenu = { ...menu }
@@ -58,7 +60,7 @@ export const MenuForm = () => {
     //   newMenu[event.target.id] = event.target.value
     //   // update state
     //   setMenu(newMenu)
-    // }
+    }
 
     const handleClickSaveMenu = () => {
       // Save the menu details
@@ -108,7 +110,7 @@ export const MenuForm = () => {
                     </div>
                     <div className="menuDay__container">
                         {menuFormData.menuDays.map(menuDay => {
-                            <Menu key={menuDay.id} menuDay={menuDay} dayRecipes={menuDay.recipeIds}></Menu>
+                            <Menu key={menuDay.id} menuDay={menuDay} dayRecipes={menuDay.recipes}></Menu>
                         })}
                     </div>
                     <button className="btn btn-primary"
@@ -121,7 +123,7 @@ export const MenuForm = () => {
                 </form>
             </main>
 
-            <DragDropRecipeLibrary />        
+            <DragDropRecipeLibrary recipes={userRecipes} />        
         </DragDropContext>
         </>
     )

@@ -1,31 +1,17 @@
 import React from "react"
 import Card from 'react-bootstrap/Card'
-import { Droppable } from "react-beautiful-dnd"
-import { DraggableRecipeItem } from "./DraggableRecipeItem"
+import { Meal } from "./Meal"
 
-export const Menu = ({key, menuDay, dayRecipes}) => {
-    const labels = ["Breakfast", "Lunch", "Dinner", "Snack"]
-            
+export const Menu = ({ menuDay, dayRecipes}) => {
+    
     return (
-        <Card className="menu-card" key={key}>
+        <Card className="menu-card">
             <Card.Body>
                 <Card.Title>{menuDay.title}</Card.Title>
                 <div className="dayForm-container">
-                    {dayRecipes.map((recipe,index) => (
-                        <>
-                            <h5 className="meal">Breakfast:</h5>
-                            <Droppable droppableId={menuDay.id}>
-                                {(provided) => (
-                                    <div className="mealDayForm-container" innerRef={provided.innerRef} {...provided.droppableProps}>
-                                        
-                                        <DraggableRecipeItem key={recipe.id} recipe={recipe} index={index} />
-                                        
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                        </>
-                    ))}
+                    {dayRecipes.map((recipeId,index) => {
+                        <Meal key={recipeId} day={menuDay.title} recipeId={recipeId} index={index} />        
+                    })}
                 </div>
             </Card.Body>
         </Card>

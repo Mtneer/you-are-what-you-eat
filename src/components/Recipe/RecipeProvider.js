@@ -16,13 +16,13 @@ export const RecipeProvider = (props) => {
         .then(setRecipes)
     }
 
-    // const getRecipeById = (id) => {
-    //     return fetch(`http://localhost:8088/Recipes/${id}?_expand=location&_expand=customer`)
-    //         .then(res => res.json())
-    // }
+    const getRecipeById = (id) => {
+        return fetch(`http://localhost:8088/Recipes/${id}`)
+            .then(res => res.json())
+    }
 
     const getUserRecipes = () => {
-        return fetch(`http://localhost:8088/userrecipes?_userId=${currentUser}&_expand=recipes`)
+        return fetch(`http://localhost:8088/userrecipes?_userId=${currentUser}&_expand=recipe`)
         .then(res => res.json())
         .then(setUserRecipes)
     }
@@ -80,7 +80,7 @@ export const RecipeProvider = (props) => {
     */
     return (
         <RecipeContext.Provider value={{
-            recipes, userRecipes, getRecipes, getUserRecipes, addRecipe, addIngredient
+            recipes, userRecipes, getRecipes, getUserRecipes, getRecipeById, addRecipe, addIngredient
         }}>
             {props.children}
         </RecipeContext.Provider>

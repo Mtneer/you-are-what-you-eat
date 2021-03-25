@@ -1,14 +1,14 @@
 import React from "react"
 import { Draggable } from "react-beautiful-dnd"
 
-export const DraggableRecipeItem = ({ key, recipe, index }) => {
+export const DraggableRecipeItem = ({ recipe, index }) => {
     return (
-        <Draggable key={key} draggableId={recipe.id} index={index}>
+        <Draggable draggableId={recipe.id.toString()} index={index}>
             {(provided) => (
-                <div {...provided.draggableProps} {...provided.dragHandleProps} innerRef={provided.innerRef}>
-                    <h3 className="recipe__name">
+                <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                    <h6 className="recipe__name">
                         { recipe.name }
-                    </h3>
+                    </h6>
                 </div>
             )}
         </Draggable>
