@@ -8,8 +8,35 @@
     display: flex;
 }
 
-.card-container {
+.menuDay-container {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.draggable-recipe-container{
+    border: 1px solid darkgrey;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+}
+
+.recipe__name {
+    margin: 0;
+}
+
+.recipeList {
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.mealDayForm-container {
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 10px;
 }

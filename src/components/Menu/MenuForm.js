@@ -13,7 +13,7 @@ export const MenuForm = () => {
     const { addMenu, addMenuRecipes, getMenuRecipes } = useContext(MenuContext)
     const [menu, setMenu] = useState({})
 
-    const menuID = 1
+    const menuID = 2
     const { menuRecipes, setMenuRecipes } = useContext(MenuContext)
     const [menuFormData, setMenuFormData] = useState([])
     console.log(menuFormData)
@@ -40,7 +40,6 @@ export const MenuForm = () => {
     useEffect(()=>{
         getUserRecipes()
         .then(getMenuRecipes(menuID))
-        .then(console.log(userRecipes))
     }, [])
 
     // when the "+ Row" button is clicked, this function will copy state, add 1 to state, and pass the new number of rows into the IngredientTable component, which will re-render
@@ -56,31 +55,33 @@ export const MenuForm = () => {
     //when a field changes, update state. The return will re-render and display based on the values in state
     //Controlled component
     const handleControlledInputChange = (event) => {
-    //   /* When changing a state object or array,
-    //   always create a copy, make changes, and then set state.*/
-    //   const newMenu = { ...menu }
-    //   /* Recipe is an object with properties.
-    //   Set the property to the new value
-    //   using object bracket notation. */
-    //   newMenu[event.target.id] = event.target.value
-    //   // update state
-    //   setMenu(newMenu)
+        console.log(event.target.value)
+      /* When changing a state object or array,
+      always create a copy, make changes, and then set state.*/
+      const newMenu = { ...menu }
+      /* Recipe is an object with properties.
+      Set the property to the new value
+      using object bracket notation. */
+      newMenu[event.target.id] = event.target.value
+      // update state
+      setMenu(newMenu)
+      console.log(newMenu)
     }
 
     const handleClickSaveMenu = () => {
       // Save the menu details
-    //   addMenu({
-    //     name: menu.name,
-    //     userId: +localStorage.getItem("YouAreWhatYouEat_user"),
-    //   })
-    //   .then(response => response.json())
-    //   .then(parsedRes => {
-    //     // pull out RecipeId
-    //     const menuId = parsedRes.id
-    //     // pass in array of ingredients and recipeId to addIngredientFunction
-    //     addMenuRecipes(menuRecipes, menuId)
-    //   })
-    //   .then(() => history.push("/shopping-list"))
+      addMenu({
+        name: menu.name,
+        userId: +localStorage.getItem("YouAreWhatYouEat_user"),
+      })
+      .then(response => response.json())
+      .then(parsedRes => {
+        // pull out RecipeId
+        const menuId = parsedRes.id
+        // pass in array of ingredients and recipeId to addIngredientFunction
+        addMenuRecipes(menuFormData, menuId)
+      })
+      .then(() => history.push("/shopping-list"))
     }
 
     const handleDragChange = (result) => {
@@ -97,14 +98,12 @@ export const MenuForm = () => {
         }
 
         // Start and Finish Droppable Containers
-
         const startPosition = source.droppableId
         const [ , finishDay, , finishPosition] = destination.droppableId.split("-")
         console.log(startPosition)
         console.log(finishPosition)
+        console.log(finishDay)
 
-        
-        
         const newMenuFormData = [...menuFormData]
         console.log(newMenuFormData)
         const indexToRemove = undefined
@@ -121,7 +120,7 @@ export const MenuForm = () => {
         const newMenuRecipe = {
             menuId: 1,
             recipeId: +draggableId.split("-")[1],
-            position: finishDay*finishPosition
+            position: (parseInt(finishDay)-1)*4+parseInt(finishPosition)
         }
         console.log(newMenuRecipe)
         
@@ -132,89 +131,36 @@ export const MenuForm = () => {
         newMenuFormData.push(newMenuRecipe)
         setMenuFormData(newMenuFormData)
         console.log(newMenuFormData)
-        console.log(menuFormData)
-        // const start = []
-        // const finish = []
-
-        // if (start === finish) {
-        //     const newTaskIds = Array.from(start.taskIds);
-        //     // remove the old index of recipeId from the array
-        //     newTaskIds.splice(source.index, 1);
-        //     // insert the recipeId into the new index
-        //     newTaskIds.splice(destination.index, 0, draggableId);
-      
-        //     const newColumn = {
-        //       ...start,
-        //       taskIds: newTaskIds,
-        //     };
-      
-        //     const newState = {
-        //       ...this.state,
-        //       columns: {
-        //         ...this.state.columns,
-        //         [newColumn.id]: newColumn,
-        //       },
-        //     };
-      
-        //     this.setState(newState);
-        //     return;
-        // }
-
-        // // Moving from one list to another
-        // const startTaskIds = Array.from(start.taskIds);
-        // startTaskIds.splice(source.index, 1);
-        // const newStart = {
-        // ...start,
-        // taskIds: startTaskIds,
-        // };
-
-        // const finishTaskIds = Array.from(finish.taskIds);
-        // finishTaskIds.splice(destination.index, 0, draggableId);
-        // const newFinish = {
-        // ...finish,
-        // taskIds: finishTaskIds,
-        // };
-
-        // const newState = {
-        // ...this.state,
-        // columns: {
-        //     ...this.state.columns,
-        //     [newStart.id]: newStart,
-        //     [newFinish.id]: newFinish,
-        // },
-        // };
-        // this.setState(newState);
-
     }
 
     return (
         <>
+        <main className="main-container row gx-6">
         <DragDropContext onDragEnd={handleDragChange}>
-            <main className="mainContainer">
+            <section className="form-container col-lg-9 col-sm-9">
                 <form className="menuForm">
                     <div className="menuForm__header">
                         <h2 className="menuForm__title">New Menu</h2>
                         <fieldset className="flex-container">
                             <label htmlFor="name">Menu name:</label>
-                            <input type="text" id="name" required autoFocus className="form-control" placeholder="Menu name" />
+                            <input type="text" id="name" required autoFocus className="form-control" placeholder="Menu name" onInput={handleControlledInputChange} />
                         </fieldset>
                         <div>
                             <button className="btn btn-secondary btn-sm" onClick={handleAddDay}>+ Day</button>
                         </div>
                     </div>
-                    <div className="menuDay__container">
+                    <div className="menuDay-container">
                         {Array.from({length: numDays}, (_, index) => index + 1).map(numDay => {
                             let dayRecipes = []
-                            console.log(menuFormData)
+
                             if (menuFormData.length !== 0) {
                                 // if the position number of the menuRecipe is between (numDays-1)*4 and numDays*4, then pass it into dayRecipes
                                 dayRecipes = menuFormData.filter(menuRecipe => {
-                                    if (menuRecipe.position > (numDay-1)*4 && menuRecipe.position <= numDay*4) {
+                                    if (Math.floor((menuRecipe.position-1)/4+1) === (numDay)) {
                                         return menuRecipe
                                     }
                                 })
                             }
-
                             
                             return (
                                 <Menu key={`Day-${numDay}`} numDay={numDay} dayRecipes={dayRecipes}></Menu>
@@ -229,10 +175,12 @@ export const MenuForm = () => {
                         Save Menu
                     </button>
                 </form>
-            </main>
-
-            <DragDropRecipeLibrary recipes={userRecipes} />        
+            </section>
+            <aside className="col-lg-3 col-sm-3">
+                <DragDropRecipeLibrary recipes={userRecipes} />        
+            </aside>
         </DragDropContext>
+        </main>
         </>
     )
 }

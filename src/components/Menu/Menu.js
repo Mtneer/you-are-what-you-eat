@@ -5,7 +5,7 @@ import { Meal } from "./Meal"
 
 export const Menu = ({ numDay, dayRecipes}) => {
     const labels = ["Breakfast", "Lunch", "Dinner", "Snack"]
-    console.log(dayRecipes)
+    console.log(numDay, dayRecipes)
     
     return (
         <Card className="menu-card">
@@ -15,20 +15,21 @@ export const Menu = ({ numDay, dayRecipes}) => {
                     {Array.from({length: 4}, (_, index) => index + 1).map((positionNum) => {
                         
                         const recipe = dayRecipes.filter(dayRecipe => {
-                            if (dayRecipe.position === positionNum) {
-                                console.log(dayRecipe)
+                            if (dayRecipe.position === positionNum+(4*(numDay-1))) {
                                 return dayRecipe
                             }
                         })
 
                         if (recipe.length > 0) {
+                            // debugger
                             return (
                                 <>
                                     <h5 className="meal">{labels[positionNum-1]}</h5>
-                                    <Meal key={`R-${positionNum}`} numDay={numDay} recipe={recipe} positionNum={positionNum} />   
+                                    <Meal key={`D-${numDay}-P-${positionNum}`} numDay={numDay} recipe={recipe} positionNum={positionNum} />   
                                 </>     
                             )
                         } else {
+                            // debugger
                             return (
                                 <>
                                 <h5 className="meal">{labels[positionNum-1]}</h5>

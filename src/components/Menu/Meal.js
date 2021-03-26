@@ -4,8 +4,7 @@ import { DraggableRecipeItem } from "./DraggableRecipeItem"
 import { RecipeContext } from "../Recipe/RecipeProvider"
 
 export const Meal = ({ numDay, recipe, positionNum}) => {
-    console.log(recipe)
-    console.log(recipe[0].recipeId)
+
     const { getRecipeById } = useContext(RecipeContext)
 
     const [recipeById, setRecipe] = useState({})
@@ -16,7 +15,7 @@ export const Meal = ({ numDay, recipe, positionNum}) => {
     },[])
 
     return (
-        <Droppable droppableId={`Day-${numDay}-${positionNum}`}>
+        <Droppable droppableId={`Day-${numDay}-P-${positionNum}`}>
             {(provided) => (
                 <div className="mealDayForm-container" ref={provided.innerRef} {...provided.droppableProps}>
                     

@@ -6,7 +6,7 @@ export const DragDropRecipeLibrary = ({recipes}) => {
 
 
     return (
-        <aside>
+        <>
             <h3>Recipes</h3>
             <Droppable droppableId="recipeLibrary">
                 {(provided) => (
@@ -20,6 +20,6 @@ export const DragDropRecipeLibrary = ({recipes}) => {
                     </div>
                 )}
             </Droppable>
-        </aside>
+        </>
     )
 }
