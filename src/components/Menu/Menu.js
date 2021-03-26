@@ -4,9 +4,8 @@ import { Droppable } from "react-beautiful-dnd"
 import { Meal } from "./Meal"
 
 export const Menu = ({ numDay, dayRecipes}) => {
-    console.log(Array.from({length: 4}, (_, index) => index + 1))
     const labels = ["Breakfast", "Lunch", "Dinner", "Snack"]
-
+    console.log(dayRecipes)
     
     return (
         <Card className="menu-card">

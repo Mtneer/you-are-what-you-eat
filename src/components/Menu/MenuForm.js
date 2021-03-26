@@ -4,7 +4,7 @@ import { MenuContext } from "./MenuProvider"
 import { RecipeContext } from "../Recipe/RecipeProvider"
 import { Menu } from "./Menu"
 import { DragDropContext } from 'react-beautiful-dnd';
-import { MenuFormContext } from './DragDropProvider'
+// import { MenuFormContext } from './DragDropProvider'
 import { DragDropRecipeLibrary } from "./DragDropRecipeLibrary"
 import "./Menu.css"
 
@@ -15,13 +15,14 @@ export const MenuForm = () => {
 
     const menuID = 1
     const { menuRecipes, setMenuRecipes } = useContext(MenuContext)
-
+    const [menuFormData, setMenuFormData] = useState([])
+    console.log(menuFormData)
     // Define State to manage number of days in the menu
     let [numDays, setNumDays] = useState(1)
 
     // pull functions and data to manage the drag and drop feature
-    const { menuFormData, setMenuFormData } = useContext(MenuFormContext)
-    console.log(menuFormData)
+    // const { menuFormData, setMenuFormData } = useContext(MenuFormContext)
+    // console.log(menuFormData)
     
     // const [menuRecipes, setMenuRecipes] = useState([])
 
@@ -95,55 +96,94 @@ export const MenuForm = () => {
             return;
         }
 
-        const start = []
-        const finish = []
+        // Start and Finish Droppable Containers
 
-        if (start === finish) {
-            const newTaskIds = Array.from(start.taskIds);
-            newTaskIds.splice(source.index, 1);
-            newTaskIds.splice(destination.index, 0, draggableId);
-      
-            const newColumn = {
-              ...start,
-              taskIds: newTaskIds,
-            };
-      
-            const newState = {
-              ...this.state,
-              columns: {
-                ...this.state.columns,
-                [newColumn.id]: newColumn,
-              },
-            };
-      
-            this.setState(newState);
-            return;
+        const startPosition = source.droppableId
+        const [ , finishDay, , finishPosition] = destination.droppableId.split("-")
+        console.log(startPosition)
+        console.log(finishPosition)
+
+        
+        
+        const newMenuFormData = [...menuFormData]
+        console.log(newMenuFormData)
+        const indexToRemove = undefined
+        // if (newMenuFormData.length === 0) {
+
+        // } else if (newMenuFormData.menuRecipes.length > 0) {
+        //     indexToRemove = newMenuFormData.menuRecipes.find((menuRecipe, index) => {
+        //         if (menuRecipe.menuId === menuID && menuRecipe.position === finishPosition) {
+        //             return index
+        //         }
+        //     })
+        // }
+
+        const newMenuRecipe = {
+            menuId: 1,
+            recipeId: +draggableId.split("-")[1],
+            position: finishDay*finishPosition
         }
+        console.log(newMenuRecipe)
+        
+        if (indexToRemove !== undefined) {
+            console.log(indexToRemove)
+            // newMenuFormData.menuRecipes.splice(indexToRemove, 1)
+        }
+        newMenuFormData.push(newMenuRecipe)
+        setMenuFormData(newMenuFormData)
+        console.log(newMenuFormData)
+        console.log(menuFormData)
+        // const start = []
+        // const finish = []
 
-        // Moving from one list to another
-        const startTaskIds = Array.from(start.taskIds);
-        startTaskIds.splice(source.index, 1);
-        const newStart = {
-        ...start,
-        taskIds: startTaskIds,
-        };
+        // if (start === finish) {
+        //     const newTaskIds = Array.from(start.taskIds);
+        //     // remove the old index of recipeId from the array
+        //     newTaskIds.splice(source.index, 1);
+        //     // insert the recipeId into the new index
+        //     newTaskIds.splice(destination.index, 0, draggableId);
+      
+        //     const newColumn = {
+        //       ...start,
+        //       taskIds: newTaskIds,
+        //     };
+      
+        //     const newState = {
+        //       ...this.state,
+        //       columns: {
+        //         ...this.state.columns,
+        //         [newColumn.id]: newColumn,
+        //       },
+        //     };
+      
+        //     this.setState(newState);
+        //     return;
+        // }
 
-        const finishTaskIds = Array.from(finish.taskIds);
-        finishTaskIds.splice(destination.index, 0, draggableId);
-        const newFinish = {
-        ...finish,
-        taskIds: finishTaskIds,
-        };
+        // // Moving from one list to another
+        // const startTaskIds = Array.from(start.taskIds);
+        // startTaskIds.splice(source.index, 1);
+        // const newStart = {
+        // ...start,
+        // taskIds: startTaskIds,
+        // };
 
-        const newState = {
-        ...this.state,
-        columns: {
-            ...this.state.columns,
-            [newStart.id]: newStart,
-            [newFinish.id]: newFinish,
-        },
-        };
-        this.setState(newState);
+        // const finishTaskIds = Array.from(finish.taskIds);
+        // finishTaskIds.splice(destination.index, 0, draggableId);
+        // const newFinish = {
+        // ...finish,
+        // taskIds: finishTaskIds,
+        // };
+
+        // const newState = {
+        // ...this.state,
+        // columns: {
+        //     ...this.state.columns,
+        //     [newStart.id]: newStart,
+        //     [newFinish.id]: newFinish,
+        // },
+        // };
+        // this.setState(newState);
 
     }
 
@@ -164,13 +204,18 @@ export const MenuForm = () => {
                     </div>
                     <div className="menuDay__container">
                         {Array.from({length: numDays}, (_, index) => index + 1).map(numDay => {
-                            console.log(numDay)
-                            // if the position number of the menuRecipe is between (numDays-1)*4 and numDays*4, then pass it into dayRecipes
-                            const dayRecipes = menuRecipes.filter(menuRecipe => {
-                                if (menuRecipe.position > (numDay-1)*4 && menuRecipe.position <= numDay*4) {
-                                    return menuRecipe
-                                }
-                            })
+                            let dayRecipes = []
+                            console.log(menuFormData)
+                            if (menuFormData.length !== 0) {
+                                // if the position number of the menuRecipe is between (numDays-1)*4 and numDays*4, then pass it into dayRecipes
+                                dayRecipes = menuFormData.filter(menuRecipe => {
+                                    if (menuRecipe.position > (numDay-1)*4 && menuRecipe.position <= numDay*4) {
+                                        return menuRecipe
+                                    }
+                                })
+                            }
+
+                            
                             return (
                                 <Menu key={`Day-${numDay}`} numDay={numDay} dayRecipes={dayRecipes}></Menu>
                             )
