@@ -11,14 +11,13 @@ export const MenuProvider = (props) => {
     const currentUser = localStorage.getItem("YouAreWhatYouEat_user")
 
     const getMenus = () => {
-        return fetch("http://localhost:8088/menus?_embed=ingredients")
+        return fetch("http://localhost:8088/menus")
         .then(res => res.json())
         .then(setMenus)
-        .then(console.log(menus))
     }
 
     // const getMenuById = (id) => {
-    //     return fetch(`http://localhost:8088/menus/${id}?_expand=location&_expand=customer`)
+    //     return fetch(`http://localhost:8088/menus/${id}`)
     //         .then(res => res.json())
     // }
 
@@ -55,7 +54,7 @@ export const MenuProvider = (props) => {
         .then(setMenuRecipes)
     }
     
-    // const releaseMenu = MenuId => {
+    // const deleteMenu = MenuId => {
     //     return fetch(`http://localhost:8088/Menus/${MenuId}`, {
     //         method: "DELETE"
     //     })
