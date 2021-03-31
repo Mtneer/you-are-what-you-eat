@@ -12,6 +12,8 @@ import { MenuProvider } from "./Menu/MenuProvider"
 import { MenuFormProvider } from "./Menu/DragDropProvider"
 import { MenuForm } from "./Menu/MenuForm"
 
+import { ShoppingList } from "./ShoppingList/ShoppingList"
+
 export const ApplicationViews = () => {
 
     return (
@@ -34,6 +36,9 @@ export const ApplicationViews = () => {
                     <MenuFormProvider>
                         <Route exact path="/menus">
                             <MenuForm />
+                        </Route>
+                        <Route exact path="/shopping-list">
+                            <ShoppingList />
                         </Route>
                     </MenuFormProvider>
                 </MenuProvider>

@@ -3,27 +3,32 @@ import { useHistory } from 'react-router-dom';
 import { RecipeContext } from "../Recipe/RecipeProvider"
 import { MenuContext } from "../Menu/MenuProvider"
 import Button from "react-bootstrap/Button"
-import "./Recipe.css"
+// import "./Recipe.css"
 
 export const ShoppingList = () => {
-    const { getRecipes, recipes, getRecipeIngredientsByRecipeId } = useContext(RecipeContext)
+    const { getRecipes, recipes, getRecipeIngredientsByRecipeIds } = useContext(RecipeContext)
     const { menuRecipes, getMenuRecipes } = useContext(MenuContext)
 
-    const [menuRecipeIds, setMenuRecipeIds] = useState([])
+    const [menuIngredients, setMenuIngredients] = useState([])
     // Since you are no longer ALWAYS displaying all of the Recipes
     // const [ filteredRecipes, setFiltered ] = useState([])
     const history = useHistory()
-
+    const menuID = 2
     // Initialization effect hook -> Go get Recipe data
+    let newMenuRecipeIds = []
     useEffect(()=>{
         getMenuRecipes(menuID)
-        .then(res => {
-            const newMenuRecipeIds = res.map(menuRecipe => menuRecipe.recipeId)            
+        .then(res => res.json())
+        .then(parsedRes => {
+            console.log(parsedRes)
+            newMenuRecipeIds = parsedRes.map(menuRecipe => menuRecipe.recipeId)
+            console.log(newMenuRecipeIds)
         })
         .then(() => {
-            promiseArray = 
-            getRecipeIngredientsByRecipeId()
-            
+            getRecipeIngredientsByRecipeIds(newMenuRecipeIds)
+            .then(ingObjArr => {
+                
+            })
         })
     }, [])
 
@@ -33,11 +38,11 @@ export const ShoppingList = () => {
         <>
             <h1>Shopping List</h1>
             <div className="shopping-list">
-                {
+                {/* {
                     recipes.map((recipe) => {
                         return <RecipeCard key={recipe.id} recipe={recipe} />
                     })
-                }
+                } */}
             </div>
         </>
     )

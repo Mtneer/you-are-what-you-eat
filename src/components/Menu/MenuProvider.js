@@ -49,9 +49,9 @@ export const MenuProvider = (props) => {
     }
 
     const getMenuRecipes = (menuId) => {
-        return fetch(`http://localhost:8088/menurecipes?_menuId=${menuId}`)
-        .then(res => res.json())
-        .then(setMenuRecipes)
+        return fetch(`http://localhost:8088/menurecipes?menuId=${menuId}`)
+        // .then(res => res.json())
+        // .then(setMenuRecipes)
     }
     
     // const deleteMenu = MenuId => {

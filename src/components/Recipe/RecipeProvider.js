@@ -22,7 +22,7 @@ export const RecipeProvider = (props) => {
     }
 
     const getUserRecipes = () => {
-        return fetch(`http://localhost:8088/userrecipes?_userId=${currentUser}&_expand=recipe`)
+        return fetch(`http://localhost:8088/userrecipes?userId=${currentUser}&_expand=recipe`)
         .then(res => res.json())
         .then(setUserRecipes)
     }
@@ -40,10 +40,17 @@ export const RecipeProvider = (props) => {
 
     const getRecipeIngredientsByRecipeIds = (recipeIds) => {
         const promiseArray = recipeIds.map(recipeId => {
-            fetch(`http://localhost:8088/ingredients?_recipeId=${recipeId}`)
+            console.log(recipeId)
+            return fetch(`http://localhost:8088/ingredients?recipeId=${recipeId}`)
         })
-        return fetch(`http://localhost:8088/ingredients?_recipeId=${recipeId}`)
-        .then(res => res.json())
+        console.log(promiseArray)
+        return Promise.all(promiseArray)
+        .then(res => Promise.all(res.map(r => r.json())))
+        //     return res.map(resObj => resObj.json())})
+        .then(parsedRes => {
+            console.log(parsedRes)
+            
+        })
     }
     
     // const releaseRecipe = RecipeId => {
@@ -88,7 +95,7 @@ export const RecipeProvider = (props) => {
     */
     return (
         <RecipeContext.Provider value={{
-            recipes, userRecipes, getRecipes, getUserRecipes, getRecipeById, addRecipe, addIngredient, getRecipeIngredientsByRecipeId
+            recipes, userRecipes, getRecipes, getUserRecipes, getRecipeById, addRecipe, addIngredient, getRecipeIngredientsByRecipeIds
         }}>
             {props.children}
         </RecipeContext.Provider>
