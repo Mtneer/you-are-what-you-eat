@@ -4,29 +4,29 @@ import { RecipeContext } from "./RecipeProvider"
 import "./Recipe.css"
 
 export const RecipeLibrary = () => {
-    const { recipes, getRecipes } = useContext(RecipeContext)
+    const { userRecipes, getUserRecipes } = useContext(RecipeContext)
 
     // Initialization effect hook -> Go get Recipe data
     useEffect(()=>{
-        getRecipes()
+        getUserRecipes()
     }, [])
-
+    
     return (
-        <aside>
+        <>
             <h3>Recipes</h3>
             <div className="recipes">
                 {
-                    recipes.map(recipe => {
+                    userRecipes.map(userRecipe => {
                         return (
-                            <div className="recipeTile" key={recipe.id}>
+                            <div className="recipeTile" key={userRecipe.recipeId}>
                                 <p className="recipe__name">
-                                    { recipe.name }
+                                    { userRecipe.recipe.name }
                                 </p>
                             </div>
                         )
                     })
                 }
             </div>
-        </aside>
+        </>
     )
 }

@@ -2,3 +2,31 @@
     display: flex;
     justify-content: space-between;
 }
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container {
+    padding: 10px;
+}
+
+.recipes {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe {
+    margin-bottom: 10px;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-title h5 {
+    margin-bottom: 0;
+}

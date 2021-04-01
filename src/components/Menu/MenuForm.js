@@ -135,14 +135,14 @@ export const MenuForm = () => {
 
     return (
         <>
-        <main className="main-container row gx-6">
+        <section className="main-container row gx-6">
         <DragDropContext onDragEnd={handleDragChange}>
-            <section className="form-container col-lg-9 col-sm-9">
+            <article className="form-container col-lg-9 col-sm-9">
                 <form className="menuForm">
                     <div className="menuForm__header">
                         <h2 className="menuForm__title">New Menu</h2>
                         <fieldset className="flex-container">
-                            <label htmlFor="name">Menu name:</label>
+                            <label className="menu-name-field-label" htmlFor="name">Menu name:</label>
                             <input type="text" id="name" required autoFocus className="form-control" placeholder="Menu name" onInput={handleControlledInputChange} />
                         </fieldset>
                         <div>
@@ -175,12 +175,12 @@ export const MenuForm = () => {
                         Save Menu
                     </button>
                 </form>
-            </section>
-            <aside className="col-lg-3 col-sm-3">
+            </article>
+            <aside className="recipe-library col-lg-3 col-sm-3">
                 <DragDropRecipeLibrary recipes={userRecipes} />        
             </aside>
         </DragDropContext>
-        </main>
+        </section>
         </>
     )
 }

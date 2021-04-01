@@ -1,16 +1,18 @@
 import React from "react"
-import "./Recipe.css"
+import Card from 'react-bootstrap/Card'
 
-export const ShoppingSection = ({ foodType }) => {
+
+export const ShoppingSection = ({ foodType, ingredients }) => {
     return (
         <>
-            <section className="food-type">
-                <h3 className="food-type-label">
-                    { foodType.name }
-                </h3>
-                <div className="food-type__ingredients">{ recipe?.ingredients.map(ing => {return <p className="ingredient" key={ing.id}>{ing.name}</p>}) }</div>
-                <div className="recipe__instructions">{ recipe.instructions }</div>
-            </section>
+        <Card className="food-type col-lg-3 col-sm-3">
+            <Card.Body>
+                <Card.Title>{foodType}</Card.Title>
+
+                <div className="food-type__ingredients">{ ingredients.map((ing, index) => {return <p className="ingredient" key={index}>{ing.name}</p>}) }
+                </div>
+            </Card.Body>
+        </Card>
         </>
     )
 }

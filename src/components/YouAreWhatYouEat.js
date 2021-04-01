@@ -14,7 +14,10 @@ export const YouAreWhatYouEat = () => (
                     return (
                         <>
                             <NavBar />
-                            <ApplicationViews />
+                            <main>
+
+                                <ApplicationViews />
+                            </main>
                         </>
                     )
                 } else {

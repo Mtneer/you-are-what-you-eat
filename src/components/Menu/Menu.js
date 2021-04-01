@@ -24,7 +24,7 @@ export const Menu = ({ numDay, dayRecipes}) => {
                             // debugger
                             return (
                                 <>
-                                    <h5 className="meal">{labels[positionNum-1]}</h5>
+                                    <h7 className="meal">{labels[positionNum-1]}</h7>
                                     <Meal key={`D-${numDay}-P-${positionNum}`} numDay={numDay} recipe={recipe} positionNum={positionNum} />   
                                 </>     
                             )
@@ -32,7 +32,7 @@ export const Menu = ({ numDay, dayRecipes}) => {
                             // debugger
                             return (
                                 <>
-                                <h5 className="meal">{labels[positionNum-1]}</h5>
+                                <h7 className="meal">{labels[positionNum-1]}</h7>
                                 <Droppable droppableId={`Day-${numDay}-P-${positionNum}`}>
                                     {(provided) => (
                                         <div className="mealDayForm-container" ref={provided.innerRef} {...provided.droppableProps}>
