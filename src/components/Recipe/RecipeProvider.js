@@ -6,6 +6,7 @@ export const RecipeContext = createContext()
 // This component establishes what data can be used.
 export const RecipeProvider = (props) => {
     const [recipes, setRecipes] = useState([])
+    const [userRecipes, setUserRecipes] = useState([])
     // const [searchTerms, setSearchTerms ] = useState("")
     const currentUser = localStorage.getItem("YouAreWhatYouEat_user")
 
@@ -13,13 +14,18 @@ export const RecipeProvider = (props) => {
         return fetch("http://localhost:8088/recipes?_embed=ingredients")
         .then(res => res.json())
         .then(setRecipes)
-        .then(console.log(recipes))
     }
 
-    // const getRecipeById = (id) => {
-    //     return fetch(`http://localhost:8088/Recipes/${id}?_expand=location&_expand=customer`)
-    //         .then(res => res.json())
-    // }
+    const getRecipeById = (id) => {
+        return fetch(`http://localhost:8088/recipes/${id}`)
+            .then(res => res.json())
+    }
+
+    const getUserRecipes = () => {
+        return fetch(`http://localhost:8088/userrecipes?_userId=${currentUser}&_expand=recipe`)
+        .then(res => res.json())
+        .then(setUserRecipes)
+    }
 
     const addRecipe = RecipeObj => {
         return fetch("http://localhost:8088/recipes", {
@@ -74,7 +80,7 @@ export const RecipeProvider = (props) => {
     */
     return (
         <RecipeContext.Provider value={{
-            recipes, getRecipes, addRecipe, addIngredient
+            recipes, userRecipes, getRecipes, getUserRecipes, getRecipeById, addRecipe, addIngredient
         }}>
             {props.children}
         </RecipeContext.Provider>

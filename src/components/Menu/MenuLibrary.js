@@ -40,7 +40,7 @@ export const RecipeList = () => {
 
             <div className="recipes">
                 {
-                    recipes.map((recipe) => {
+                    recipes.map(recipe => {
                         return <RecipeCard key={recipe.id} recipe={recipe} />
                     })
                 }

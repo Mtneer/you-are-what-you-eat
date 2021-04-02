@@ -8,7 +8,12 @@ import { RecipeForm } from "./Recipe/RecipeForm"
 import { RecipeList } from "./Recipe/RecipeList"
 import { RecipeProvider } from "./Recipe/RecipeProvider"
 
+import { MenuProvider } from "./Menu/MenuProvider"
+import { MenuFormProvider } from "./Menu/DragDropProvider"
+import { MenuForm } from "./Menu/MenuForm"
+
 export const ApplicationViews = () => {
+
     return (
         <>
             {/* Render the location list when http://localhost:3000/ */}
@@ -25,6 +30,13 @@ export const ApplicationViews = () => {
                 <Route exact path="/recipes/create">
                     <RecipeForm />
                 </Route>
+                <MenuProvider>
+                    <MenuFormProvider>
+                        <Route exact path="/menus">
+                            <MenuForm />
+                        </Route>
+                    </MenuFormProvider>
+                </MenuProvider>
             </RecipeProvider>
         </>
     )
