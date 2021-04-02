@@ -3,30 +3,30 @@ import { useHistory } from 'react-router-dom';
 import { RecipeContext } from "./RecipeProvider"
 import "./Recipe.css"
 
-export const RecipeLibrary = () => {
-    const { recipes, getRecipes } = useContext(RecipeContext)
-
-    // Initialization effect hook -> Go get Recipe data
-    useEffect(()=>{
-        getRecipes()
-    }, [])
-
+export const RecipeLibrary = ({userRecipes}) => {
+    // const { userRecipes, getUserRecipes } = useContext(RecipeContext)
+    console.log(userRecipes)
+    // // Initialization effect hook -> Go get Recipe data
+    // useEffect(()=>{
+    //     getUserRecipes()
+    // }, [])
+    
     return (
-        <aside>
-            <h3>Recipes</h3>
+        <>
+            <h5 className="aside-title">Recipe Library</h5>
             <div className="recipes">
                 {
-                    recipes.map(recipe => {
+                    userRecipes.map(userRecipe => {
                         return (
-                            <div className="recipeTile" key={recipe.id}>
+                            <div className="recipeTile" key={userRecipe.recipeId}>
                                 <p className="recipe__name">
-                                    { recipe.name }
+                                    { userRecipe.recipe.name }
                                 </p>
                             </div>
                         )
                     })
                 }
             </div>
-        </aside>
+        </>
     )
 }

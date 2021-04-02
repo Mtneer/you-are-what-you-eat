@@ -22,7 +22,7 @@ export const RecipeProvider = (props) => {
     }
 
     const getUserRecipes = () => {
-        return fetch(`http://localhost:8088/userrecipes?_userId=${currentUser}&_expand=recipe`)
+        return fetch(`http://localhost:8088/userrecipes?userId=${currentUser}&_expand=recipe`)
         .then(res => res.json())
         .then(setUserRecipes)
     }
@@ -36,6 +36,30 @@ export const RecipeProvider = (props) => {
             body: JSON.stringify(RecipeObj)
         })
         // .then(response => response.json())
+    }
+
+    const addUserRecipe = userRecipeObj => {
+        return fetch("http://localhost:8088/userrecipes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userRecipeObj)
+        })
+    }
+
+    const getRecipeIngredientsByRecipeIds = (recipeIds) => {
+        const promiseArray = recipeIds.map(recipeId => {
+            return fetch(`http://localhost:8088/ingredients?recipeId=${recipeId}`)
+        })
+        return Promise.all(promiseArray)
+        .then(res => Promise.all(res.map(r => r.json())))
+        //     return res.map(resObj => resObj.json())})
+        // .then(parsedRes => {
+        //     console.log(parsedRes)
+        //     // need to sort by product type
+        //     parsedRes.sort(r => r.name)
+        // })
     }
     
     // const releaseRecipe = RecipeId => {
@@ -80,7 +104,7 @@ export const RecipeProvider = (props) => {
     */
     return (
         <RecipeContext.Provider value={{
-            recipes, userRecipes, getRecipes, getUserRecipes, getRecipeById, addRecipe, addIngredient
+            recipes, userRecipes, getRecipes, getUserRecipes, getRecipeById, addRecipe, addIngredient, getRecipeIngredientsByRecipeIds, addUserRecipe
         }}>
             {props.children}
         </RecipeContext.Provider>

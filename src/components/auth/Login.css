@@ -47,14 +47,29 @@ fieldset {
 }
 
 .form--login {
-    background-position-x: right;
-    background-image: url(logo.png);
+    background-position-x: center;
+    /* background-image: url("https://www.treehugger.com/thmb/OWLU3l9tSBqhLtXSLSmbFu_3z5Q=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2017__06__shutterstock_722718082-f72eb5f09a07441bbc333b7124fe1d00.jpg"); */
     z-index: 1;
     min-height: 25rem;
     min-width: 45rem;
     background-color: hsla(0,0%,100%,0.40);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
+    background-size: cover;
+    padding: 30vh 10vh 10vh 10vh;
+    
+}
+.background {
+    background-position-x: center;
+    background-image: url("https://www.treehugger.com/thmb/OWLU3l9tSBqhLtXSLSmbFu_3z5Q=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2017__06__shutterstock_722718082-f72eb5f09a07441bbc333b7124fe1d00.jpg");
+    z-index: 1;
+    min-height: 25rem;
+    min-width: 45rem;
+    background-color: hsla(0,0%,100%,0.40);
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
 }
 
 .button--close {

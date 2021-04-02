@@ -11,16 +11,15 @@ export const MenuProvider = (props) => {
     const currentUser = localStorage.getItem("YouAreWhatYouEat_user")
 
     const getMenus = () => {
-        return fetch("http://localhost:8088/menus?_embed=ingredients")
+        return fetch("http://localhost:8088/menus")
         .then(res => res.json())
         .then(setMenus)
-        .then(console.log(menus))
     }
 
-    // const getMenuById = (id) => {
-    //     return fetch(`http://localhost:8088/menus/${id}?_expand=location&_expand=customer`)
-    //         .then(res => res.json())
-    // }
+    const getMenuById = (id) => {
+        return fetch(`http://localhost:8088/menus/${id}`)
+        .then(res => res.json())
+    }
 
     const addMenu = MenuObj => {
         return fetch("http://localhost:8088/menus", {
@@ -50,12 +49,12 @@ export const MenuProvider = (props) => {
     }
 
     const getMenuRecipes = (menuId) => {
-        return fetch(`http://localhost:8088/menurecipes?_menuId=${menuId}`)
-        .then(res => res.json())
-        .then(setMenuRecipes)
+        return fetch(`http://localhost:8088/menurecipes?menuId=${menuId}`)
+        // .then(res => res.json())
+        // .then(setMenuRecipes)
     }
     
-    // const releaseMenu = MenuId => {
+    // const deleteMenu = MenuId => {
     //     return fetch(`http://localhost:8088/Menus/${MenuId}`, {
     //         method: "DELETE"
     //     })
@@ -81,7 +80,7 @@ export const MenuProvider = (props) => {
     */
     return (
         <MenuContext.Provider value={{
-            menus, getMenus, menuRecipes, getMenuRecipes, setMenuRecipes, addMenu, addMenuRecipes
+            menus, getMenus, menuRecipes, getMenuRecipes, setMenuRecipes, addMenu, addMenuRecipes, getMenuById
         }}>
             {props.children}
         </MenuContext.Provider>

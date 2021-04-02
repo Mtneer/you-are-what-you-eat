@@ -2,3 +2,46 @@
     display: flex;
     justify-content: space-between;
 }
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container {
+    padding: 10px;
+}
+
+.recipes {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe {
+    margin-bottom: 10px;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-title h5 {
+    margin-bottom: 0;
+}
+.recipe-library {
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.aside-title {
+    padding: 1rem 0rem 0rem 0rem;
+}
+
+/* CSS HEX */
+/* --prussian-blue: #24354Bff;
+--tan: #D1AA87ff;
+--black-bean: #3E1503ff;
+--moss-green: #7D9A4Eff;
+--eggplant: #6c464eff; */
