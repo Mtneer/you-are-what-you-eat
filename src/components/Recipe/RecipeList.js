@@ -7,9 +7,7 @@ import Button from "react-bootstrap/Button"
 import "./Recipe.css"
 
 export const RecipeList = () => {
-    const { recipes, getRecipes, addUserRecipe } = useContext(RecipeContext)
-
-    // const { userRecipes, getUserRecipes } = useContext(RecipeContext)
+    const { recipes, getRecipes, userRecipes, getUserRecipes, addUserRecipe } = useContext(RecipeContext)
     
     // Since you are no longer ALWAYS displaying all of the Recipes
     // const [ filteredRecipes, setFiltered ] = useState([])
@@ -17,8 +15,8 @@ export const RecipeList = () => {
 
     // Initialization effect hook -> Go get Recipe data
     useEffect(()=>{
-        getRecipes()
-        // .then(getUserRecipes())
+        getUserRecipes()
+        .then(getRecipes())
     }, [])
 
     const handleClickAddToLibrary = (event) => {
@@ -27,13 +25,14 @@ export const RecipeList = () => {
             recipeId: +event.target.id,
             userId: +localStorage.getItem("YouAreWhatYouEat_user") 
         }
-        console.log(recipeToAdd)
         addUserRecipe(recipeToAdd)
+        .then(getUserRecipes)
     }
 
     return (
         <>
         <section className="row">
+            <div className="col-lg-1 col-sm-1"></div>
             <article className="col-lg-8 col-sm-8">
                 <div className="recipe-header">
                     <h1>Recipes</h1>
@@ -46,14 +45,17 @@ export const RecipeList = () => {
                 <div className="recipes">
                     {
                         recipes.map((recipe) => {
-                            return <RecipeCard key={recipe.id} recipe={recipe} handleClickAddToLibrary={handleClickAddToLibrary}/>
+                            console.log(recipes)
+                            const print = userRecipes.map(uR => uR.recipeId).includes(recipe.id)
+                            return <RecipeCard key={recipe.id} recipe={recipe} print={print} handleClickAddToLibrary={handleClickAddToLibrary}/>
                         })
                     }
                 </div>
             </article>
-            <aside className="col-lg-4 col-sm-4">
-                <RecipeLibrary />
+            <aside className="recipe-library col-lg-2 col-sm-2">
+                <RecipeLibrary userRecipes={userRecipes}/>
             </aside>
+            <div className="col-lg-1 col-sm-1"></div>
         </section>
         </>
     )

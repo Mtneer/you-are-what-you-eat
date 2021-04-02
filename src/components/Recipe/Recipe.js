@@ -3,18 +3,27 @@ import "./Recipe.css"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
-export const RecipeCard = ({ recipe, handleClickAddToLibrary }) => {
+export const RecipeCard = ({ recipe, print, handleClickAddToLibrary }) => {
+    console.log(print)
+    const printButton = () => {
+        if (!print) {
+            return (
+                <div className="button-container">
+                    <Button className="btn-sm btn-secondary" id={recipe.id} onClick={handleClickAddToLibrary} active="false">
+                        Add to Library
+                    </Button>
+                </div>
+            )
+        }
+    }
+
     return (
         <>
             <Card className="recipe">
             <div className="card-header">
 
                 <Card.Title>{ recipe.name }</Card.Title>
-                <div className="button-container">
-                    <Button className="btn-sm btn-secondary" id={recipe.id} onClick={handleClickAddToLibrary}>
-                        Add to Library
-                    </Button>
-                </div>
+                {printButton()}
             </div>
             <Card.Body>
                 <div className="recipe__ingredients">

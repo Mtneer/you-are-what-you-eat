@@ -1,0 +1,24 @@
+.food-type {
+    margin: 5px;
+    width: 300px;
+}
+
+.ingredient_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.ingredient_row p {
+    padding: 0 20px 0 0;
+
+}
+
+.menu-library {
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.aside-title {
+    padding: 1rem 0rem 0rem 0rem;
+}

@@ -7,7 +7,7 @@ import { IngredientTable } from "./IngredientsTable"
 import "./Recipe.css"
 
 export const RecipeForm = () => {
-    const { addRecipe, addIngredient } = useContext(RecipeContext)
+    const { addRecipe, addIngredient, addUserRecipe } = useContext(RecipeContext)
     
     /*
     With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
@@ -49,8 +49,17 @@ export const RecipeForm = () => {
       })
       .then(response => response.json())
       .then(parsedRes => {
-        // pull out RecipeId
         const recipeId = parsedRes.id
+        const newUserRecipe = {
+          recipeId: +recipeId,
+          userId: +localStorage.getItem("YouAreWhatYouEat_user") 
+        }
+        return addUserRecipe(newUserRecipe)
+      })
+      .then(response => response.json())
+      .then(parsedRes => {
+        // pull out RecipeId
+        const recipeId = parsedRes.recipeId
         // pass in array of ingredients and recipeId to addIngredientFunction
         addIngredient(ingredients, recipeId)
       })

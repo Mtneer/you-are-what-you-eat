@@ -1,38 +1,35 @@
 import React, { useState, useContext, useEffect } from "react"
-import { useHistory } from 'react-router-dom';
 import { RecipeContext } from "../Recipe/RecipeProvider"
 import { MenuContext } from "../Menu/MenuProvider"
 import { ShoppingSection } from "./ShoppingSection"
-import Button from "react-bootstrap/Button"
-// import "./Recipe.css"
+import { MenuLibrary } from "../Menu/MenuLibrary"
+import "./ShoppingList.css"
 
 export const ShoppingList = () => {
     const { getRecipeIngredientsByRecipeIds } = useContext(RecipeContext)
     const { menuRecipes, getMenuRecipes } = useContext(MenuContext)
 
     const [menuIngredients, setMenuIngredients] = useState([])
+
+    const [menuId, setMenuId] = useState([])
     // Since you are no longer ALWAYS displaying all of the Recipes
     // const [ filteredRecipes, setFiltered ] = useState([])
-    const history = useHistory()
-    const menuID = 2
+    // const history = useHistory()
+
     // Initialization effect hook -> Go get Recipe data
     let newMenuRecipeIds = []
     useEffect(()=>{
-        getMenuRecipes(menuID)
+        
+        getMenuRecipes(menuId)
         .then(res => res.json())
         .then(parsedRes => {
-            console.log(parsedRes)
             newMenuRecipeIds = parsedRes.map(menuRecipe => menuRecipe.recipeId)
-            console.log(newMenuRecipeIds)
         })
         .then(() => {
             getRecipeIngredientsByRecipeIds(newMenuRecipeIds)
             .then(ingObjArr => {
-                console.log(ingObjArr)
                 let newMenuIngredientsArray = ingObjArr.flat()
-                console.log(newMenuIngredientsArray)
                 newMenuIngredientsArray.sort((r1, r2) => {
-                    console.log(r1)
                     if (r1.foodType.toLowerCase() < r2.foodType.toLowerCase()) {
                         return -1
                     } else if (r1.foodType.toLowerCase() > r2.foodType.toLowerCase()) {
@@ -42,26 +39,39 @@ export const ShoppingList = () => {
                 setMenuIngredients(newMenuIngredientsArray)
             })
         })
-    }, [])
+    }, [menuId])
+
+    const handleClickMenu = (event) => {
+        setMenuId(event.target.id)
+    }
 
     // Need to import ingredients based on a menuId
     const foodTypes = ["Produce", "Meat", "Eggs and Dairy", "Frozen", "Packaged/Processed", "Deli", "Bakery"]
 
     return (
         <>
-            <h1>Shopping List</h1>
-            <div className="shopping-list row">
-                {
-                    foodTypes.map((foodTypeName, index) => {
-                        console.log(menuIngredients)
-                        if (menuIngredients.length === 0) {return}
-                        const ingredients = menuIngredients.filter(ing => 
-                            ing.foodType === foodTypeName)
-                        return <ShoppingSection key={foodTypeName} foodType={foodTypeName} ingredients={ingredients} />
-                        
-                    })
-                }
-            </div>
+            <section className="row">
+                <div className="col-lg-1 col-sm-1"></div>
+                <article className="col-lg-8 col-sm-8">
+                    <h1>Shopping List</h1>
+                    <div className="shopping-list row">
+                        {
+                            foodTypes.map((foodTypeName, index) => {
+                                
+                                const ingredients = menuIngredients.filter(ing => 
+                                    ing.foodType === foodTypeName)
+                                if (ingredients.length === 0) {return}
+                                return <ShoppingSection key={foodTypeName} foodType={foodTypeName} ingredients={ingredients} />
+                                
+                            })
+                        }
+                    </div>
+                </article>
+                <aside className="menu-library col-lg-2 col-sm-2">
+                    <MenuLibrary handleClickMenu={handleClickMenu}/>
+                </aside>
+                <div className="col-lg-1 col-sm-1"></div>
+            </section>
         </>
     )
 }

@@ -6,6 +6,7 @@ import { Menu } from "./Menu"
 import { DragDropContext } from 'react-beautiful-dnd';
 // import { MenuFormContext } from './DragDropProvider'
 import { DragDropRecipeLibrary } from "./DragDropRecipeLibrary"
+import Button from 'react-bootstrap/Button'
 import "./Menu.css"
 
 export const MenuForm = () => {
@@ -68,6 +69,7 @@ export const MenuForm = () => {
       console.log(newMenu)
     }
 
+    let menuId = 0
     const handleClickSaveMenu = () => {
       // Save the menu details
       addMenu({
@@ -77,11 +79,11 @@ export const MenuForm = () => {
       .then(response => response.json())
       .then(parsedRes => {
         // pull out RecipeId
-        const menuId = parsedRes.id
+        menuId = parsedRes.id
         // pass in array of ingredients and recipeId to addIngredientFunction
         addMenuRecipes(menuFormData, menuId)
       })
-      .then(() => history.push("/shopping-list"))
+      .then(() => history.push(`/shopping-list`))
     }
 
     const handleDragChange = (result) => {
@@ -107,22 +109,12 @@ export const MenuForm = () => {
         const newMenuFormData = [...menuFormData]
         console.log(newMenuFormData)
         const indexToRemove = undefined
-        // if (newMenuFormData.length === 0) {
-
-        // } else if (newMenuFormData.menuRecipes.length > 0) {
-        //     indexToRemove = newMenuFormData.menuRecipes.find((menuRecipe, index) => {
-        //         if (menuRecipe.menuId === menuID && menuRecipe.position === finishPosition) {
-        //             return index
-        //         }
-        //     })
-        // }
 
         const newMenuRecipe = {
             menuId: 1,
             recipeId: +draggableId.split("-")[1],
             position: (parseInt(finishDay)-1)*4+parseInt(finishPosition)
         }
-        console.log(newMenuRecipe)
         
         if (indexToRemove !== undefined) {
             console.log(indexToRemove)
@@ -130,14 +122,13 @@ export const MenuForm = () => {
         }
         newMenuFormData.push(newMenuRecipe)
         setMenuFormData(newMenuFormData)
-        console.log(newMenuFormData)
     }
 
     return (
         <>
-        <section className="main-container row gx-6">
+        <section className="main-container row gy-6">
         <DragDropContext onDragEnd={handleDragChange}>
-            <article className="form-container col-lg-9 col-sm-9">
+            <article className="form-container col-lg-9 col-sm-9 gx-3">
                 <form className="menuForm">
                     <div className="menuForm__header">
                         <h2 className="menuForm__title">New Menu</h2>
@@ -167,16 +158,18 @@ export const MenuForm = () => {
                             )
                         })}
                     </div>
-                    <button className="btn btn-primary"
-                        onClick={event => {
-                        event.preventDefault() 
-                        handleClickSaveMenu()
-                        }}>
-                        Save Menu
-                    </button>
+                    <div className="button-container">
+                        <Button className="btn btn-primary"
+                            onClick={event => {
+                                event.preventDefault() 
+                                handleClickSaveMenu()
+                            }}>
+                            Save Menu
+                        </Button>
+                    </div>
                 </form>
             </article>
-            <aside className="recipe-library col-lg-3 col-sm-3">
+            <aside className="recipe-library col-lg-3 col-sm-3 gx-3">
                 <DragDropRecipeLibrary recipes={userRecipes} />        
             </aside>
         </DragDropContext>

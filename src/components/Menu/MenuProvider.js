@@ -16,10 +16,10 @@ export const MenuProvider = (props) => {
         .then(setMenus)
     }
 
-    // const getMenuById = (id) => {
-    //     return fetch(`http://localhost:8088/menus/${id}`)
-    //         .then(res => res.json())
-    // }
+    const getMenuById = (id) => {
+        return fetch(`http://localhost:8088/menus/${id}`)
+        .then(res => res.json())
+    }
 
     const addMenu = MenuObj => {
         return fetch("http://localhost:8088/menus", {
@@ -80,7 +80,7 @@ export const MenuProvider = (props) => {
     */
     return (
         <MenuContext.Provider value={{
-            menus, getMenus, menuRecipes, getMenuRecipes, setMenuRecipes, addMenu, addMenuRecipes
+            menus, getMenus, menuRecipes, getMenuRecipes, setMenuRecipes, addMenu, addMenuRecipes, getMenuById
         }}>
             {props.children}
         </MenuContext.Provider>

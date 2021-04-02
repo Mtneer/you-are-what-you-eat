@@ -40,6 +40,9 @@ export const ApplicationViews = () => {
                         <Route exact path="/shopping-list">
                             <ShoppingList />
                         </Route>
+                        {/* <Route exact path="/shopping-list/:menuIDfromSL(\d+)">
+                            <ShoppingList />
+                        </Route> */}
                     </MenuFormProvider>
                 </MenuProvider>
             </RecipeProvider>

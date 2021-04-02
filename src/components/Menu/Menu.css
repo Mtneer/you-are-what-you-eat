@@ -19,7 +19,7 @@
     border-radius: 5px;
     padding: 2px 10px;
     margin-bottom: 5px;
-    width: 200px;
+    /* width: 200px; */
 }
 
 .recipe__name {
@@ -53,4 +53,9 @@
     width: 200px;
     padding: .375rem .75rem;
     margin: 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
 }

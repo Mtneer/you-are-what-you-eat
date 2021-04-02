@@ -19,9 +19,9 @@ export const NavBar = (props) => {
             <li className="navbar__item">
                 <Link className="navbar__link" to="/shopping-list">Shopping List</Link>
             </li>
-            <li className="navbar__item">
+            {/* <li className="navbar__item">
                 <Link className="navbar__link" to="/nutrition ">Nutrition</Link>
-            </li>
+            </li> */}
         </ul>
         <div>
             <Button className="logout btn-sm" onClick={() => {localStorage.removeItem("YouAreWhatYouEat_user"); history.push("/login")}}>

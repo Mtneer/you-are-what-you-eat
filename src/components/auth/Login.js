@@ -6,7 +6,6 @@ import "./Login.css"
 
 export const Login = props => {
     const email = useRef()
-    const password = useRef()
     const existDialog = useRef()
     const history = useHistory()
 
@@ -37,7 +36,7 @@ export const Login = props => {
                 <button className="button--close" onClick={e => existDialog.current.close()}>Close</button>
             </dialog>
 
-            <section>
+            <section className="background">
                 <form className="form--login" onSubmit={handleLogin}>
                     <h1>You Are What You Eat</h1>
                     <h2>Please sign in</h2>

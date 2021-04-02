@@ -38,23 +38,20 @@ export const RecipeProvider = (props) => {
         // .then(response => response.json())
     }
 
-    const addUserRecipe = RecipeObj => {
+    const addUserRecipe = userRecipeObj => {
         return fetch("http://localhost:8088/userrecipes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(RecipeObj)
+            body: JSON.stringify(userRecipeObj)
         })
-        .then(getUserRecipes)
     }
 
     const getRecipeIngredientsByRecipeIds = (recipeIds) => {
         const promiseArray = recipeIds.map(recipeId => {
-            console.log(recipeId)
             return fetch(`http://localhost:8088/ingredients?recipeId=${recipeId}`)
         })
-        console.log(promiseArray)
         return Promise.all(promiseArray)
         .then(res => Promise.all(res.map(r => r.json())))
         //     return res.map(resObj => resObj.json())})

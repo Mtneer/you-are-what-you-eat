@@ -7,7 +7,7 @@ export const DragDropRecipeLibrary = ({recipes}) => {
 
     return (
         <>
-            <h3>Recipes</h3>
+            <h5 className="aside-title">Recipes</h5>
             <Droppable droppableId="recipeLibrary">
                 {(provided) => (
                     <div className="recipeList" ref={provided.innerRef} {...provided.droppableProps}>
