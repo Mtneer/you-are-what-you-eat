@@ -1,5 +1,4 @@
 
-![casCade Logo with Internet Arcade citation](./src/assets/documentation/casCade-Logo-sc.png)
 # [You Are What You Eat &#8211; A Diet and Meal Planning App](https://cascade-app.herokuapp.com/)
 
 ## Table of Contents
@@ -8,11 +7,9 @@
      - [Online Demo](#online-demo)
      - [Local Installation](#local-installation)
    - [Usage](#usage)
-     - [Home](#home)
      - [Library](#library)
-     - [Favorites](#favorites)
-     - [Search](#search)
-     - [Game Player](#game-player)
+     - [Menu](#menu)
+     - [Shopping List](#shopping list)
    - [Footnotes](#footnotes)
 
 ## About
