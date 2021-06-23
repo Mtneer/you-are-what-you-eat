@@ -1,70 +1,87 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![casCade Logo with Internet Arcade citation](./src/assets/documentation/casCade-Logo-sc.png)
+# [You Are What You Eat &#8211; A Diet and Meal Planning App](https://cascade-app.herokuapp.com/)
 
-## Available Scripts
+## Table of Contents
+  - [About](#about)
+  - [Getting Started](#getting-started)
+     - [Online Demo](#online-demo)
+     - [Local Installation](#local-installation)
+   - [Usage](#usage)
+     - [Home](#home)
+     - [Library](#library)
+     - [Favorites](#favorites)
+     - [Search](#search)
+     - [Game Player](#game-player)
+   - [Footnotes](#footnotes)
 
-In the project directory, you can run:
+## About
 
-### `npm start`
+You-Are-What-You-Eat is a React application designed to streamline diet and menu planning tasks. Once a profile is created, users can browse a community library of recipes, add their own recipes, "favorite" recipes, build menus, and export shopping lists. Grocery shopping has always been my least favorite chore. Finding healthy recipes that work for me and help me meet my goals, and compiling ingredients into a shopping list is monotonous and takes time - so I automated it!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This app was built using React, RESTful APIs via [json-server](https://github.com/typicode/json-server), [React-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd), and styled with [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Online Demo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A working demo is available on Heroku<sup id="a1">[1](#f1)</sup> at [https://you-are-what-you-eat.herokuapp.com/](https://you-are-what-you-eat.herokuapp.com/).
 
-### `npm run build`
+Register a new account<sup id="a2">[2](#f2)</sup> or use the email address `test@test.com` to login and browse the app.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Local Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1.  Download and install [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+    - If Node.js and npm are already installed, use `node -v && npm -v` to check the version and verify that both versions are `v10.24.1` & `6.14.13` or greater.
+    - If the version is older than the minimum requirement, update to the latest stable version of [node](https://docs.npmjs.com/try-the-latest-stable-version-of-node) & [npm](https://docs.npmjs.com/try-the-latest-stable-version-of-npm).
+2. Use [https or SSH](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/about-authentication-to-github#authenticating-with-the-command-line) to clone the project folder to a local directory:
+    ```Bash
+    $ git clone ...
+    ```
+3. From the cloned project directory:
+    ```Bash
+    $ npm install
+    ```
+4. Install the JSON Server node package:
+    ```Bash
+    $ npm install -g json-server
+    ```
+5. Navigate ⬆ up from the cloned project one directory level, create a new directory and copy the default database.json file:
+    ```Bash
+    $ cd .. && mkdir ./database && cp ../you-are-what-you-eat/api-base/database.json ./database
+    ```
+6. Move to the database directory and launch JSON Server:
+    ```Bash
+    $ cd ./database && json-server --watch default-entries.json --port 8088
+    ```
+7.  Use your preferred code editor to find & replace the string `https://you-are-what-you-eat.herokuapp.com/` with `http://localhost:8088/` in the following files:
+    - `./src/components/auth/Login.js`
+    - `./src/components/auth/Register.js`
+    - `./src/components/favorites/FavoritesProvider.js`
+8. From the project root directory, run the following:
+    ```Bash
+    $ npm start
+    ```
+9. Once the app loads in the browser, click the Register tab to sign up for a new account and login.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+You Are What You Eat is comprised of three sections:
+- Library
+- Menu
+- Shopping List
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Library
+Library provides a list of recipes available from the community of users. These recipes can be "Favorited" to be saved to your personal recipe library, which is displayed on the right side of the screen. The list of personal favorites is used in the Menu form to provide a more succint set of options to the user.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Menu
+The Menu view allows the user to build a new menu using a drag and drop UI. Users can also select a previously saved menu from the list on the right side of the page to make small edits to existing menus.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Shopping List
+The shopping list view displays a compiled list of ingredients based on a user selected menu from a list of saved menus on the right side of the page. The list is broken up into major sections of modern grocers for added convenience.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Footnotes
+- <b id="f1">[1]</b> Heroku will periodically cycle apps into a [sleep state](https://blog.heroku.com/app_sleeping_on_heroku), please allow an additional moment on first load.  [↩](#a1)
+- <b id="f2">[2]</b> Heroku will reset the `json-server` database to its default state from time to time, expect all demo account data to be removed.  [↩](#a2)
